@@ -1,17 +1,48 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import AppRouter from "./routes/AppRouter";
+import configureStore from "./store/configureStore";
+import { addExpense } from "./actions/expenses";
+import { setTextFilter } from "./actions/filters";
+import getVisibleExpenses from "./selectors/expenses";
+// import "./playground/destructuring";
+// import "./playground/redux-101";
+// import "./playground/redux-expenses";
+import AuthInfo from "./playground/hoc";
+import "./index.css";
+import "./sass/main.scss";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+const store = configureStore();
+
+// store.subscribe(() => {
+//   console.log(store.getState());
+// });
+
+store.dispatch(addExpense({ description: "water bill" }));
+store.dispatch(addExpense({ description: "electric bill" }));
+store.dispatch(addExpense({ description: "holiday", amount: 50000 }));
+store.dispatch(addExpense({ description: "food", amount: 20000 }));
+// store.dispatch(setTextFilter("water"));
+
+// setTimeout(() => {
+//   store.dispatch(setTextFilter("bill"));
+// }, 3000);
+
+// console.log(store.getState());
+
+const state = store.getState();
+const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
+console.log(visibleExpenses);
+
+const jsx = (
+  <Provider store={store}>
+    <AppRouter />
+  </Provider>
 );
+ReactDOM.render(jsx, document.getElementById("root"));
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// ReactDOM.render(
+//   <AuthInfo info={"private data"} isAuthenticated={true} />,
+//   document.getElementById("root")
+// );
