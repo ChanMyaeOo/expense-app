@@ -12,6 +12,7 @@ import getVisibleExpenses from "./selectors/expenses";
 import AuthInfo from "./playground/hoc";
 import "./index.css";
 import "./sass/main.scss";
+import "react-dates/lib/css/_datepicker.css";
 
 const store = configureStore();
 
