@@ -1,6 +1,5 @@
 import React from "react";
 import moment from "moment";
-import { Link } from "react-router-dom";
 import "react-dates/initialize";
 import { SingleDatePicker } from "react-dates";
 
@@ -98,6 +97,7 @@ export default class ExpenseForm extends React.Component {
             onFocusChange={this.onFocusChange}
             numberOfMonths={1}
             isOutsideRange={() => false}
+            id="uuidv4()"
           />
           <textarea
             placeholder="Add a note for your expense (Optional)"
